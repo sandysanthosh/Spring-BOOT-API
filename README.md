@@ -41,3 +41,56 @@ String decryptedData = encryptor.decrypt(encryptedData);
 
     
     ```
+    
+    
+    
+    #encrypt
+    
+    ```
+    
+    import java.security.Security;
+import java.io.*;
+import java.util.*;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+public class Encryption
+{
+private static Cipher cipher = null;
+public static void main(String[] args) throws Exception
+{
+Scanner s=new Scanner(System.in);
+KeyGenerator keyGenerator = KeyGenerator.getInstance("DESede");
+keyGenerator.init(168);
+SecretKey secretKey = keyGenerator.generateKey();
+cipher = Cipher.getInstance("DESede"); 
+System.out.println("\nEnter the text to be Encrypted...");
+String s1 = s.nextLine();
+System.out.println("Plain Text Before Encryption: " + s1); 
+byte[] plainTextByte = s1.getBytes("UTF8");
+byte[] encryptedBytes = encrypt(plainTextByte, secretKey);
+String encryptedText = new String(encryptedBytes, "UTF8");
+System.out.println("Encrypted Text After Encryption: " + encryptedText);
+byte[] decryptedBytes = decrypt(encryptedBytes, secretKey);
+String decryptedText = new String(decryptedBytes, "UTF8");
+System.out.println("Decrypted Text After Decryption: " + decryptedText);
+}
+static byte[] encrypt(byte[] plainTextByte, SecretKey secretKey)throws Exception
+{
+cipher.init(Cipher.ENCRYPT_MODE, secretKey); 
+byte[] encryptedBytes = cipher.doFinal(plainTextByte);
+return encryptedBytes;
+}
+static byte[] decrypt(byte[] encryptedBytes, SecretKey secretKey)throws Exception
+{
+cipher.init(Cipher.DECRYPT_MODE, secretKey);
+byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+return decryptedBytes;
+}
+}
+
+
+```
+
+
+    
